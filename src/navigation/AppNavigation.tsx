@@ -25,4 +25,4 @@ export const AppNavigation = () => {
   );
 };
 
-export type KmsNavigationProps = NativeStackNavigationProp<AppNavigationParams>;
+export type AppNavigationProps = NativeStackNavigationProp<AppNavigationParams>;

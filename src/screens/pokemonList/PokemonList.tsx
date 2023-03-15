@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl, Text, useWindowDimensions, View} from 'react-native';
+import {AppNavigationProps} from '@navigation/AppNavigation';
+import {useNavigation} from '@react-navigation/native';
+import {FlatList, Pressable, RefreshControl, Text, useWindowDimensions, View} from 'react-native';
 import {getAllPokemon} from './pokemonList.datasource';
 import pokemonListStyles from './pokemonList.styles';
 import {PokemonListResults} from './pokemonList.types';
+import {extractIdFromUrl} from '@utils/formatter';
 
 const PokemonList = () => {
+  const navigation = useNavigation<AppNavigationProps>();
   const {width} = useWindowDimensions();
 
   const [data, setData] = useState<PokemonListResults[]>([]);
@@ -40,10 +44,16 @@ const PokemonList = () => {
     }
   };
 
+  const onPressItem = (id: number) => {
+    navigation.navigate('DetailPokemon', {id});
+  };
+
   const _renderItem = ({item: props}: {item: PokemonListResults}) => (
-    <View style={[pokemonListStyles.card, {width: (width - 10) / 2}]}>
+    <Pressable
+      onPress={() => onPressItem(extractIdFromUrl(props.url))}
+      style={[pokemonListStyles.card, {width: (width - 10) / 2}]}>
       <Text>{props.name}</Text>
-    </View>
+    </Pressable>
   );
 
   return (

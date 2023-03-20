@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Text} from '@components';
 import {AppNavigationProps} from '@navigation/AppNavigation';
 import {useNavigation} from '@react-navigation/native';
@@ -5,8 +6,10 @@ import {extractIdFromUrl} from '@utils/formatter';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, FlatList, Pressable, TextInput, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useRecoilState} from 'recoil';
 import {getAllPokemon} from '../pokemonList.datasource';
 import {PokemonListResults} from '../pokemonList.types';
+import {pokemonFilteredState, searchValueState} from './searchPokemon.model';
 import searchPokemonStyles from './searchPokemon.styles';
 
 const SearchPokemon = () => {
@@ -14,11 +17,16 @@ const SearchPokemon = () => {
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<PokemonListResults[]>([]);
-  const [pokeFiltered, setPokeFiltered] = useState<PokemonListResults[]>([]);
+  const [searchValue, setSearchValue] = useRecoilState(searchValueState);
+  const [pokeFiltered, setPokeFiltered] = useRecoilState(pokemonFilteredState);
 
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    onFilter(searchValue);
+  }, [searchValue]);
 
   const loadData = async () => {
     setLoading(true);
@@ -54,7 +62,11 @@ const SearchPokemon = () => {
         </View>
       ) : (
         <View>
-          <TextInput placeholder="Search name.." onChangeText={txt => onFilter(txt)} />
+          <TextInput
+            placeholder="Search name.."
+            value={searchValue}
+            onChangeText={txt => setSearchValue(txt)}
+          />
           <FlatList
             data={pokeFiltered}
             keyExtractor={item => item.name}

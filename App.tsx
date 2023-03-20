@@ -5,14 +5,17 @@
  * @format
  */
 
+import React from 'react';
 import {AppNavigation} from '@navigation/AppNavigation';
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import {RecoilRoot} from 'recoil';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <AppNavigation />
+      <RecoilRoot>
+        <AppNavigation />
+      </RecoilRoot>
     </NavigationContainer>
   );
 };

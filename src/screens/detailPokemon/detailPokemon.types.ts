@@ -1,5 +1,6 @@
 import {ResponseAPI} from '@utils/types';
 
+// pokemon detail
 export type DetailPokemonAbilities = {
   ability: {
     name: string;
@@ -69,3 +70,41 @@ export type DetailPokemonData = {
 };
 
 export type DetailPokemonResponse = ResponseAPI<DetailPokemonData>;
+
+// pokemon species
+export type PokemonSpeciesData = {
+  evolution_chain: {
+    url: string;
+  };
+};
+
+export type PokemonSpeciesResponse = ResponseAPI<PokemonSpeciesData>;
+
+// pokemon evolution
+export type PokemonEvolvesTo = {
+  is_baby: boolean;
+  species: {
+    name: string;
+    url: string;
+  };
+  evolves_to: {
+    is_baby: boolean;
+    species: {
+      name: string;
+      url: string;
+    };
+  }[];
+};
+
+export type PokemonEvolutionData = {
+  chain: {
+    evolves_to: PokemonEvolvesTo[];
+    is_baby: boolean;
+    species: {
+      name: string;
+      url: string;
+    };
+  };
+};
+
+export type PokemonEvolutionResponse = ResponseAPI<PokemonEvolutionData>;

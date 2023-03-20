@@ -3,11 +3,12 @@
 import React, {useEffect, useState} from 'react';
 import {AppNavigationParams} from '@navigation/AppNavigation';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {ActivityIndicator, Image, ScrollView, Text, View} from 'react-native';
-import {getDetailPokemon} from './detailPokemon.datasource';
-import {DetailPokemonData} from './detailPokemon.types';
+import {ActivityIndicator, Button, Image, ScrollView, Text, View} from 'react-native';
+import {getDetailPokemon, getPokemonEvolve, getPokemonSpecies} from './detailPokemon.datasource';
+import {DetailPokemonData, PokemonEvolutionData} from './detailPokemon.types';
 import detailPokemonStyles from './detailPokemon.styles';
 import {emptyImg} from '@utils/static';
+import {extractIdFromUrl} from '@utils/formatter';
 
 type DetailPokemonRouteProps = RouteProp<AppNavigationParams, 'DetailPokemon'>;
 
@@ -16,6 +17,8 @@ const DetailPokemon = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DetailPokemonData>();
+  const [evolveId, setEvolveId] = useState<number>();
+  const [evolveList, setEvolveList] = useState<PokemonEvolutionData>();
 
   useEffect(() => {
     loadData();
@@ -27,6 +30,20 @@ const DetailPokemon = () => {
     setLoading(false);
     if (response) {
       setData(response);
+      getPokemonSpecies(response.name).then(species => {
+        if (species) {
+          const splitId = extractIdFromUrl(species?.evolution_chain.url);
+          setEvolveId(splitId);
+        }
+      });
+    }
+  };
+
+  const loadEvolveChain = async (id: number | undefined) => {
+    const response = await getPokemonEvolve(id);
+    console.log(response);
+    if (response) {
+      setEvolveList(response);
     }
   };
 
@@ -62,6 +79,20 @@ const DetailPokemon = () => {
       {data?.moves.slice(0, 10).map(item => (
         <Text>{item.move.name}</Text>
       ))}
+      <Button title="show evolve" onPress={() => loadEvolveChain(evolveId)} />
+      {evolveList ? (
+        <View>
+          <Text>{evolveList.chain.species.name}</Text>
+          {evolveList.chain.evolves_to.map(item => (
+            <View>
+              <Text>{item.species.name}</Text>
+              {item.evolves_to.map(item2 => (
+                <Text>{item2.species.name}</Text>
+              ))}
+            </View>
+          ))}
+        </View>
+      ) : null}
     </ScrollView>
   );
 };

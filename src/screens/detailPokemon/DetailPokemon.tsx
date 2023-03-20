@@ -3,12 +3,13 @@
 import React, {useEffect, useState} from 'react';
 import {AppNavigationParams} from '@navigation/AppNavigation';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {ActivityIndicator, Button, Image, ScrollView, Text, View} from 'react-native';
+import {ActivityIndicator, Button, Image, ScrollView, View} from 'react-native';
 import {getDetailPokemon, getPokemonEvolve, getPokemonSpecies} from './detailPokemon.datasource';
 import {DetailPokemonData, PokemonEvolutionData} from './detailPokemon.types';
 import detailPokemonStyles from './detailPokemon.styles';
 import {emptyImg} from '@utils/static';
 import {extractIdFromUrl} from '@utils/formatter';
+import {Text} from '@components';
 
 type DetailPokemonRouteProps = RouteProp<AppNavigationParams, 'DetailPokemon'>;
 
@@ -71,11 +72,11 @@ const DetailPokemon = () => {
           style={detailPokemonStyles.img}
         />
       </View>
-      <Text style={{fontWeight: '800'}}>name: {data?.name}</Text>
-      <Text style={{fontWeight: '800'}}>height: {data?.height}</Text>
-      <Text style={{fontWeight: '800'}}>weight: {data?.weight}</Text>
-      <Text style={{fontWeight: '800'}}>type: {data?.types.map(type => type.type.name)}</Text>
-      <Text style={{fontWeight: '800'}}>Moves:</Text>
+      <Text weight="semiBold">name: {data?.name}</Text>
+      <Text weight="semiBold">height: {data?.height}</Text>
+      <Text weight="semiBold">weight: {data?.weight}</Text>
+      <Text weight="semiBold">type: {data?.types.map(type => type.type.name)}</Text>
+      <Text weight="semiBold">Moves:</Text>
       {data?.moves.slice(0, 10).map(item => (
         <Text>{item.move.name}</Text>
       ))}

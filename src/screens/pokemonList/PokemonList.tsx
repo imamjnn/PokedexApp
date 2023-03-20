@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {AppNavigationProps} from '@navigation/AppNavigation';
 import {useNavigation} from '@react-navigation/native';
-import {FlatList, Pressable, RefreshControl, Text, useWindowDimensions, View} from 'react-native';
+import {FlatList, Pressable, RefreshControl, useWindowDimensions, View} from 'react-native';
 import {getAllPokemon} from './pokemonList.datasource';
 import pokemonListStyles from './pokemonList.styles';
 import {PokemonListResults} from './pokemonList.types';
 import {extractIdFromUrl} from '@utils/formatter';
+import {Text} from '@components';
 
 const PokemonList = () => {
   const navigation = useNavigation<AppNavigationProps>();

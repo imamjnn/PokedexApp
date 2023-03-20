@@ -33,6 +33,26 @@ export type DetailPokemonTypes = {
   };
 };
 
+export type DetailPokemonMoves = {
+  move: {
+    name: string;
+    url: string;
+  };
+  version_group_details: [
+    {
+      level_learned_at: number;
+      move_learn_method: {
+        name: string;
+        url: string;
+      };
+      version_group: {
+        name: string;
+        url: string;
+      };
+    },
+  ];
+};
+
 export type DetailPokemonData = {
   id: number;
   name: string;
@@ -45,6 +65,7 @@ export type DetailPokemonData = {
   forms: DetailPokemonForms[];
   sprites: DetailPokemonSprites;
   types: DetailPokemonTypes[];
+  moves: DetailPokemonMoves[];
 };
 
 export type DetailPokemonResponse = ResponseAPI<DetailPokemonData>;

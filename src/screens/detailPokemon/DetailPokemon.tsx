@@ -58,6 +58,10 @@ const DetailPokemon = () => {
       <Text style={{fontWeight: '800'}}>height: {data?.height}</Text>
       <Text style={{fontWeight: '800'}}>weight: {data?.weight}</Text>
       <Text style={{fontWeight: '800'}}>type: {data?.types.map(type => type.type.name)}</Text>
+      <Text style={{fontWeight: '800'}}>Moves:</Text>
+      {data?.moves.slice(0, 10).map(item => (
+        <Text>{item.move.name}</Text>
+      ))}
     </ScrollView>
   );
 };

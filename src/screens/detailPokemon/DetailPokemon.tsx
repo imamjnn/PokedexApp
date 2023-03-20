@@ -72,17 +72,26 @@ const DetailPokemon = () => {
           style={detailPokemonStyles.img}
         />
       </View>
-      <Text weight="semiBold">name: {data?.name}</Text>
-      <Text weight="semiBold">height: {data?.height}</Text>
-      <Text weight="semiBold">weight: {data?.weight}</Text>
-      <Text weight="semiBold">type: {data?.types.map(type => type.type.name)}</Text>
-      <Text weight="semiBold">Moves:</Text>
-      {data?.moves.slice(0, 10).map(item => (
-        <Text>{item.move.name}</Text>
-      ))}
+      <Text weight="semiBold" size={20} center paddingVertical={20}>
+        {data?.name.toUpperCase()}
+      </Text>
+      <View style={detailPokemonStyles.card}>
+        <Text weight="semiBold">h: {data?.height}</Text>
+        <Text weight="semiBold">w: {data?.weight}</Text>
+      </View>
+      <Text weight="semiBold">type</Text>
+      <View style={detailPokemonStyles.card}>
+        <Text>{data?.types.map(type => type.type.name)}</Text>
+      </View>
+      <Text weight="semiBold">Moves</Text>
+      <View style={detailPokemonStyles.card}>
+        {data?.moves.slice(0, 10).map(item => (
+          <Text key={item.move.name}>{item.move.name}</Text>
+        ))}
+      </View>
       <Button title="show evolve" onPress={() => loadEvolveChain(evolveId)} />
       {evolveList ? (
-        <View>
+        <View style={detailPokemonStyles.card}>
           <Text>{evolveList.chain.species.name}</Text>
           {evolveList.chain.evolves_to.map(item => (
             <View key={item.species.name}>

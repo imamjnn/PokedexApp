@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {AppNavigationProps} from '@navigation/AppNavigation';
 import {useNavigation} from '@react-navigation/native';
@@ -18,6 +20,13 @@ const PokemonList = () => {
   const [nextPage, setNextPage] = useState(0);
 
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={() => navigation.navigate('SearchPokemon')}>
+          <Text>Search</Text>
+        </Pressable>
+      ),
+    });
     loadData();
   }, []);
 
@@ -29,6 +38,7 @@ const PokemonList = () => {
       setData(response.results);
     }
   };
+
   const loadMoreData = async () => {
     setLoading(true);
     setNextPage(nextPage + 8);

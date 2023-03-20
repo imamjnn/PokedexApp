@@ -85,10 +85,10 @@ const DetailPokemon = () => {
         <View>
           <Text>{evolveList.chain.species.name}</Text>
           {evolveList.chain.evolves_to.map(item => (
-            <View>
+            <View key={item.species.name}>
               <Text>{item.species.name}</Text>
               {item.evolves_to.map(item2 => (
-                <Text>{item2.species.name}</Text>
+                <Text key={item.species.name}>{item2.species.name}</Text>
               ))}
             </View>
           ))}
